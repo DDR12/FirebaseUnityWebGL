@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B2615704-1A02-4F37-8463-891E2BBE6D4A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Firebase.Auth.UI</RootNamespace>
+    <AssemblyName>Firebase.Auth.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\LibrariesBuilds\Firebase.Auth.UI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\LibrariesBuilds\Firebase.Auth.UI\Firebase.Auth.UI.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Firebase.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\LibrariesBuilds\Firebase.App\Firebase.App.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Firebase.Auth">
+      <HintPath>..\..\LibrariesBuilds\Firebase.Auth\Firebase.Auth.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Firebase.Auth.Extensions">
+      <HintPath>..\..\LibrariesBuilds\Firebase.Auth.Extensions\Firebase.Auth.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Firebase.Auth.Objects">
+      <HintPath>..\..\LibrariesBuilds\Firebase.Auth.Objects\Firebase.Auth.Objects.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Firebase.Utilities">
+      <HintPath>..\..\LibrariesBuilds\Firebase.Utilities\Firebase.Utilities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\HelperLibraries\JsonDotNet\AOT\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2019.2.8f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthUI.cs" />
+    <Compile Include="AuthUIPInvoke.cs" />
+    <Compile Include="AuthUIVisibilityChangeEventArgs.cs" />
+    <Compile Include="AuthUIWebGLDelegates.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="CredentialHelper.cs" />
+    <Compile Include="Enums\EmailSignInMethods.cs" />
+    <Compile Include="Enums\SignInFlow.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignInOptions\EmailSignInOption.cs" />
+    <Compile Include="SignInOptions\FederatedSignInOption.cs" />
+    <Compile Include="SignInOptions\OAuthSignInOption.cs" />
+    <Compile Include="SignInOptions\OidcSignInOption.cs" />
+    <Compile Include="SignInOptions\PhoneSignInOption.cs" />
+    <Compile Include="SignInOptions\SamlSignInOption.cs" />
+    <Compile Include="SignInOptions\SignInOption.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FirebaseAuthUIJS.jslib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

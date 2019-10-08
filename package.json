@@ -1,0 +1,16 @@
+{
+  "name": "firebasewebgl",
+  "version": "1.0.0",
+  "description": "firebase web gl",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^7.1.0",
+    "firebaseui": "^4.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "firebasewebgl"
+  },
+  "author": "",
+  "license": "ISC"
+}

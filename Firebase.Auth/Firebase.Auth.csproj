@@ -32,8 +32,7 @@
     <DocumentationFile>..\..\LibrariesBuilds\Firebase.Auth\Firebase.Auth.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Firebase.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Firebase.App">
       <HintPath>..\..\LibrariesBuilds\Firebase.App\Firebase.App.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -41,14 +40,12 @@
       <HintPath>..\..\LibrariesBuilds\Firebase.Auth.Objects\Firebase.Auth.Objects.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Firebase.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Firebase.Utilities">
       <HintPath>..\..\LibrariesBuilds\Firebase.Utilities\Firebase.Utilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\HelperLibraries\JsonDotNet\AOT\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\AOT\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

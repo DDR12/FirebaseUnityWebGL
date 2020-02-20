@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Firebase.Auth
 {
@@ -108,14 +107,14 @@ namespace Firebase.Auth
         [DllImport("__Internal")]
         public static extern void CreateUserWithEmailAndPassword_WebGL(int taskID, string appName, string email, string password, GenericTaskWebGLDelegate callback);
         [DllImport("__Internal")]
-        public static extern void SubscribeToAuthChange_WebGL(string appName, uint listenerID, WebGLAuthChangedCallback callback);
+        public static extern void SubscribeToAuthChange_WebGL(string appName, WebGLAuthChangedCallback callback);
         [DllImport("__Internal")]
-        public static extern void UnsubscribeToAuthChange_WebGL(uint listenerID);
+        public static extern void UnsubscribeToAuthChange_WebGL(string appName);
         [DllImport("__Internal")]
-        public static extern void SubscribeToIdTokenChange_WebGL(string appName, uint listenerID, WebGLIdTokenChangedCallback callback);
+        public static extern void SubscribeToIdTokenChange_WebGL(string appName, WebGLIdTokenChangedCallback callback);
 
         [DllImport("__Internal")]
-        public static extern void UnSubscribeToIdTokenChange_WebGL(uint listenerID);
+        public static extern void UnSubscribeToIdTokenChange_WebGL(string appName);
 
         [DllImport("__Internal")]
         public static extern bool IsSignedInWithEmailLink_WebGL(string appName, string emailLink);

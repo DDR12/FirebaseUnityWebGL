@@ -14,10 +14,6 @@
             return 0;
         },
     },
-    GetDefaultAppName_WebGL: function ()
-    {
-        return AppWebGL.AllocateString("[DEFAULT]");
-    },
     InitializeFirebaseApp_WebGL: function (appNamePtr, optionsPtr)
     {
         var appName = Pointer_stringify(appNamePtr);
@@ -29,6 +25,7 @@
         }
         catch (e)
         {
+            consol.log("Error initializing " + appName + ": " + e.message);
             return false;
         }
     },

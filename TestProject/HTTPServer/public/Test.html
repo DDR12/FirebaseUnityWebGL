@@ -18,20 +18,17 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
 
-    <!--<script>
+    <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyCnOmKMxGrulk9j8Yzll8_iGFPh21Mp3CM",
             authDomain: "purposeproject-115d6.firebaseapp.com",
-            databaseURL: "https://purposeproject-115d6.firebaseio.com",
             projectId: "purposeproject-115d6",
-            storageBucket: "purposeproject-115d6.appspot.com",
-            messagingSenderId: "542449280607",
             appId: "1:542449280607:web:2b069df11e07942c"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-    </script>-->
+    </script>
 
     <!--<script>
         // Your web app's Firebase configuration
@@ -51,7 +48,11 @@
     <script>
         function PrintProvidersData()
         {
-            console.log(firebase.SDK_VERSION);
+            firebase.auth().signInWithEmailAndPassword("newuser@gmail.com", "newuser@gmail.com").then(function (user) {
+                console.log(user);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }   
       
     </script>

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Firebase.Auth
 {
@@ -21,6 +20,8 @@ namespace Firebase.Auth
         public string SignInMethod { get; set; }
 
         internal string FullJson { get; set; }
+
+        [JsonConstructor]
 
         private Credential()
         {

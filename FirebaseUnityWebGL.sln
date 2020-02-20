@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firebase.App", "Firebase.App\Firebase.App.csproj", "{025B130C-BB67-461B-8DAB-ABF65329203F}"
 EndProject
@@ -36,6 +36,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firebase.Auth.Extensions", "Firebase.Auth.Extensions\Firebase.Auth.Extensions.csproj", "{EDFD6F58-52A0-436C-873E-E627D801860B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firebase.Auth.Objects", "Firebase.Auth.Objects\Firebase.Auth.Objects.csproj", "{DCA9C0C6-52CD-4403-B9F5-3F8D9C7FA571}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firebase.Task.Extension", "Firebase.Task.Extension\Firebase.Task.Extension.csproj", "{C18D22BB-7149-457E-AFB1-9EFD2302EBE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGLTasks", "WebGLTasks\WebGLTasks.csproj", "{3103C488-7080-44CA-B5DC-4F900D18A0EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,14 @@ Global
 		{DCA9C0C6-52CD-4403-B9F5-3F8D9C7FA571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA9C0C6-52CD-4403-B9F5-3F8D9C7FA571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA9C0C6-52CD-4403-B9F5-3F8D9C7FA571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18D22BB-7149-457E-AFB1-9EFD2302EBE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18D22BB-7149-457E-AFB1-9EFD2302EBE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18D22BB-7149-457E-AFB1-9EFD2302EBE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18D22BB-7149-457E-AFB1-9EFD2302EBE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3103C488-7080-44CA-B5DC-4F900D18A0EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3103C488-7080-44CA-B5DC-4F900D18A0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3103C488-7080-44CA-B5DC-4F900D18A0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3103C488-7080-44CA-B5DC-4F900D18A0EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

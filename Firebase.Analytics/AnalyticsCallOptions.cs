@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Analytics
+﻿namespace Firebase.Analytics
 {
     /// <summary>
     /// Additional options that can be passed to Firebase Analytics method calls such as <see cref="FirebaseAnalytics.LogEvent(string, AnalyticsCallOptions, Parameter[])"/>, <see cref="FirebaseAnalytics.SetCurrentScreen(string, AnalyticsCallOptions)"/>, etc.

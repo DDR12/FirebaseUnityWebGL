@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Firebase.WebGL.Threading;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Firebase.Auth
@@ -39,15 +39,22 @@ namespace Firebase.Auth
         {
             add
             {
-                var id = FirebaseWebGLCSharpEventsCoordinator.SubscribeToEvent(StateChangedEvent, value);
-                if (id != null)
-                    AuthPInvoke.SubscribeToAuthChange_WebGL(App.Name, id.Value, OnAuthChangeCallback_AOT);
+                if (value == null)
+                    return;
+                int prevCount = StateChangedEvent == null ? 0 : StateChangedEvent.GetInvocationList().Length;
+                StateChangedEvent += value;
+                if(prevCount == 0)
+                    AuthPInvoke.SubscribeToAuthChange_WebGL(App.Name, OnAuthChangeCallback_AOT);
             }
             remove
             {
-                var id = FirebaseWebGLCSharpEventsCoordinator.UnsubscribeFromEvent(StateChangedEvent, value);
-                if (id != null)
-                    AuthPInvoke.UnsubscribeToAuthChange_WebGL(id.Value);
+                if (value == null)
+                    return;
+                int prevCount = StateChangedEvent == null ? 0 : StateChangedEvent.GetInvocationList().Length;
+                StateChangedEvent -= value;
+                int currentCount = StateChangedEvent == null ? 0 : StateChangedEvent.GetInvocationList().Length;
+                if (prevCount != currentCount && currentCount == 0)
+                    AuthPInvoke.UnsubscribeToAuthChange_WebGL(App.Name);
             }
         }
 
@@ -59,16 +66,22 @@ namespace Firebase.Auth
         {
             add
             {
-                var id = FirebaseWebGLCSharpEventsCoordinator.SubscribeToEvent(IdTokenChangedEvent, value);
-                if(id != null)
-                    AuthPInvoke.SubscribeToIdTokenChange_WebGL(App.Name, id.Value,  OnIdTokenChangedCallback_AOT);
+                if (value == null)
+                    return;
+                int prevCount = IdTokenChangedEvent == null ? 0 : IdTokenChangedEvent.GetInvocationList().Length;
+                IdTokenChangedEvent += value;
+                if (prevCount == 0)
+                    AuthPInvoke.SubscribeToIdTokenChange_WebGL(App.Name, OnIdTokenChangedCallback_AOT);
             }
             remove
             {
-                var id = FirebaseWebGLCSharpEventsCoordinator.UnsubscribeFromEvent(IdTokenChangedEvent, value);
-                if (id != null)
-                    AuthPInvoke.UnSubscribeToIdTokenChange_WebGL(id.Value);
-
+                if (value == null)
+                    return;
+                int prevCount = IdTokenChangedEvent == null ? 0 : IdTokenChangedEvent.GetInvocationList().Length;
+                IdTokenChangedEvent -= value;
+                int currentCount = IdTokenChangedEvent == null ? 0 : IdTokenChangedEvent.GetInvocationList().Length;
+                if (prevCount != currentCount && currentCount == 0)
+                    AuthPInvoke.UnSubscribeToIdTokenChange_WebGL(App.Name);
             }
         }
 
@@ -118,6 +131,7 @@ namespace Firebase.Auth
         private FirebaseAuth(FirebaseApp app)
         {
             App = app;
+            PreconditionUtilities.CheckNotNullOrEmpty(App.Options.AuthDomain, nameof(App.Options.AuthDomain));
             authInstances.Add(App.Name, this);
         }
         /// <summary>
@@ -156,7 +170,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     finalTask.SetCanceled();
                 else
-                    finalTask.SetException(result.Exception.InnerExceptions);
+                    finalTask.SetException(result.Exception);
             });
             AuthPInvoke.CreateUserWithEmailAndPassword_WebGL(task.Task.Id, App.Name, email, password, WebGLTaskManager.DequeueTask);
             return finalTask.Task;
@@ -208,7 +222,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     finalTask.SetCanceled();
                 else
-                    finalTask.SetException(result.Exception.InnerExceptions);
+                    finalTask.SetException(result.Exception);
             });
             return finalTask.Task;
         }
@@ -227,7 +241,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     finalTask.SetCanceled();
                 else
-                    finalTask.SetException(result.Exception.InnerExceptions);
+                    finalTask.SetException(result.Exception);
             });
             return finalTask.Task;
         }
@@ -249,7 +263,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     finalTask.SetCanceled();
                 else
-                    finalTask.SetException(result.Exception.InnerExceptions);
+                    finalTask.SetException(result.Exception);
             });
             return finalTask.Task;
         }
@@ -272,7 +286,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     finalTask.SetCanceled();
                 else
-                    finalTask.SetException(result.Exception.InnerExceptions);
+                    finalTask.SetException(result.Exception);
             });
             return finalTask.Task;
         }

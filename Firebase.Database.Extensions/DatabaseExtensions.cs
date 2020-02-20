@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Database
+﻿namespace Firebase.Database
 {
     /// <summary>
     /// This class helps match different platform sdks, when an sdk is missing a method but the other provides it, this class is a meeting point which both implementations can be accessed using same code instead of the #if #else directive nightmare.

@@ -65,22 +65,16 @@ namespace Firebase.Messaging
         /// </summary>
         [JsonProperty("from")]
         public string From { get; set; }
+
+        [JsonProperty("original_priority")]
+        public string Original_priority { get; private set; }
+
         /// <summary>
         /// The link into the app from the message.
         /// This field is only used for downstream messages.
         /// </summary>
         [JsonProperty("link")]
-        internal string StringLink { get; set; }
-
-        [JsonProperty("original_priority")]
-        public string Original_priority { get; private set; }
-
-       [JsonIgnore]
-        public Uri Link
-        {
-            get => FirebaseApp.UrlStringToUri(StringLink);
-            set => StringLink =FirebaseApp.UriToUrlString(value);
-        }
+        public Uri Link { get; set; }
 
         /// <summary>
         /// Gets or sets the message ID.
@@ -114,6 +108,7 @@ namespace Firebase.Messaging
         /// <summary>
         /// 
         /// </summary>
+        [JsonConstructor]
         public FirebaseMessage() { }
         public void Dispose()
         {

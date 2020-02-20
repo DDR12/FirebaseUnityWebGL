@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-
 namespace Firebase.Auth
 {
     /// <summary>

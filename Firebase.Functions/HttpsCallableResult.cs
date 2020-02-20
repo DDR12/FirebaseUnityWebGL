@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Functions
+﻿namespace Firebase.Functions
 {
     /// <summary>
     /// An <see cref="HttpsCallableResult"/> contains the result of calling an HttpsCallable.

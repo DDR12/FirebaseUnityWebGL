@@ -18,8 +18,6 @@ namespace Firebase.Auth
         /// </summary>
         [JsonProperty("displayName")]
         public virtual string DisplayName { get; set; }
-        [JsonProperty("photoURL")]
-        internal virtual string PhotoLink { get; set; }
         /// <summary>
         /// Gets email associated with the user, if any.
         /// </summary>
@@ -34,17 +32,14 @@ namespace Firebase.Auth
         /// <summary>
         /// Gets the photo url associated with the user, if any.
         /// </summary>
-        [JsonIgnore]
-        public virtual Uri PhotoUrl
-        {
-            get => FirebaseApp.UrlStringToUri(PhotoLink);
-            set => PhotoLink = FirebaseApp.UriToUrlString(value);
-        }
+        [JsonProperty("photoURL")]
+        public virtual Uri PhotoUrl { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
+        [JsonConstructor]
         public UserInfo() { }
     }
 }

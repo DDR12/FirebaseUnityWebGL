@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Firebase.Analytics
+﻿namespace Firebase.Analytics
 {
     /// <summary>
     /// Event parameter.

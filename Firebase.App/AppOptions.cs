@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace Firebase
 {
     /// <summary>
     /// Options that control the creation of a Firebase App.
     /// </summary>
+    [Preserve]
     public sealed class AppOptions : IDisposable
     {
         /// <summary>
@@ -59,7 +61,10 @@ namespace Firebase
         /// <summary>
         /// 
         /// </summary>
-        public AppOptions() { }
+        ~AppOptions()
+        {
+            Dispose();
+        }
         /// <summary>
         /// Dispose the current object.
         /// </summary>
@@ -82,18 +87,25 @@ namespace Firebase
                 return null;
             }
         }
-
         internal static AppOptions LoadDefaultOptions()
         {
-            var textFile = Resources.Load<TextAsset>("FirebaseAppOptions");
-            if (textFile == null)
-                throw new Exception("Failed to load app options, please make sure your options are places in a file named 'FirebaseAppOptions' in any 'Resources' folder in your project.");
-
-            string json = textFile.text;
-            if (string.IsNullOrWhiteSpace(json))
-                throw new ArgumentNullException("appOptionsJson", "The FirebaseAppOptions file is empty!");
-            Debug.Log($"Loaded config successfully!");
-            return LoadFromJsonConfig(json);
+            FirebaseAppOptions firebaseAppOptions = FirebaseAppOptions.AppOptions;
+            AppOptions options = new AppOptions()
+            {
+                ProjectId = firebaseAppOptions.ProjectId,
+                ApiKey = firebaseAppOptions.ApiKey,
+                AppId = firebaseAppOptions.AppId,
+                AuthDomain = firebaseAppOptions.AuthDomain,
+                DatabaseUrl = firebaseAppOptions.DatabaseUrl,
+                MessageSenderId = firebaseAppOptions.DatabaseUrl,
+                StorageBucket = firebaseAppOptions.StorageBucket,
+                MessagingServerKey = firebaseAppOptions.MessagingServerKey,
+                VapidPublicKey = firebaseAppOptions.VapidPublicKey,
+            };
+            PreconditionUtilities.CheckNotNullOrEmpty(options.ProjectId, nameof(options.ProjectId));
+            PreconditionUtilities.CheckNotNullOrEmpty(options.ApiKey, nameof(options.ApiKey));
+            PreconditionUtilities.CheckNotNullOrEmpty(options.AppId, nameof(options.AppId));
+            return options;
         }
     }
 }

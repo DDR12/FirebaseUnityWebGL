@@ -45,13 +45,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\AOT\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2019.2.8f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2019.1.1f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +81,12 @@
     <Content Include="FirebaseAuthJS.jslib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebGLTasks\WebGLTasks.csproj">
+      <Project>{3103C488-7080-44CA-B5DC-4F900D18A0EF}</Project>
+      <Name>WebGLTasks</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

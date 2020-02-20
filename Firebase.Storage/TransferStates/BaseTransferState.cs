@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Storage
+﻿namespace Firebase.Storage
 {
     /// <summary>
     /// Holds base data about the current state of the upload/download task.

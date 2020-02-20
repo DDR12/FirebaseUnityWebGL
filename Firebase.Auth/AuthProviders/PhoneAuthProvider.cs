@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Firebase.WebGL.Threading;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace Firebase.Auth
 {
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Generial Firebase Json serializer/deserializer settings to match the behaviour of javascript object.
+    /// General Firebase Json serializer/deserializer settings to match the behaviour of javascript object.
     /// </summary>
     public class FirebaseJsonSettings
     {

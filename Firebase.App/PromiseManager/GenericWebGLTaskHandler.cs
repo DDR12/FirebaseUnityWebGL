@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
-namespace Firebase
+namespace Firebase.WebGL.Threading
 {
     /// <summary>
     /// Wrapper that encapsulates a generic task running on the javascript side, and resolves that task when response is back from the browser.

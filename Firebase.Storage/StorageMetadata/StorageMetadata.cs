@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-namespace Firebase.Storage
+﻿namespace Firebase.Storage
 {
     /// <summary>
     /// The full set of object metadata, including read-only properties.

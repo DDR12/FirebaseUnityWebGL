@@ -19,6 +19,7 @@ namespace Firebase.Auth
         /// <summary>
         /// 
         /// </summary>
+        [JsonConstructor]
         public UserMetadata() { }
     }
 }

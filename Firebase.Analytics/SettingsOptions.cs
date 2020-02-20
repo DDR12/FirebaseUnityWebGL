@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Analytics
+﻿namespace Firebase.Analytics
 {
     /// <summary>
     /// Specifies custom options for your <see cref="FirebaseAnalytics"/> instance. You must set these before initializing <see cref="FirebaseAnalytics.DefaultInstance"/>.

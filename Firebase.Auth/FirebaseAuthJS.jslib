@@ -3,6 +3,7 @@
     $AuthWebGL:
     {
         authChangeListeners: {},
+        idTokenChangeListeners: {},
         usersInstances: {},
         usersID: 0,
         AddUserFromCredentials: function (userCredentials)
@@ -15,8 +16,8 @@
         },
         AddUser: function (user) // Caches a native user reference and returns a wrapper.
         {
-            var id = usersID++;
-            AuthWebGL.usersInstances[id] = user;
+            var id = this.usersID++;
+            this.usersInstances[id] = user;
             var userRef = { nativeLibID: id };
             return userRef;
         },
@@ -33,16 +34,32 @@
             }
             return user;
         },
-        UnSubscribeAuthListener: function (listenerID)
+        AddAuthChangeListener: function (appName, unsubscribe)
         {
-            var unsubscribe = AuthWebGL.authChangeListeners[listenerID];
+            this.authChangeListeners[appName] = unsubscribe;
+        },
+        RemoveAuthChangeListener: function (appName)
+        {
+            var unsubscribe = this.authChangeListeners[appName];
             if (unsubscribe)
             {
+                delete this.authChangeListeners[appName];
                 unsubscribe();
-                delete AuthWebGL.authChangeListeners[listenerID];
             }
         },
-
+        AddIdTokenChangeListener: function (appName, unsubscribe)
+        {
+            this.idTokenChangeListeners[appName] = unsubscribe;
+        },
+        RemoveIdTokenChangeListener: function (appName)
+        {
+            var unsubscribe = this.idTokenChangeListeners[appName];
+            if (unsubscribe)
+            {
+                delete this.idTokenChangeListeners[appName];
+                unsubscribe();
+            }
+        },
         GetOrCreateAuthProviderRecaptcha: function (parametersJson)
         {
             var parameters = JSON.parse(parametersJson);
@@ -920,41 +937,69 @@
             AuthWebGL.SendOneParameterPromiseCallback(promiseID, callback, null, error);
         });
     },
-    SubscribeToAuthChange_WebGL: function (appNamePtr, listenerID, callback)
+    SubscribeToAuthChange_WebGL: function (appNamePtr, callback)
     {
         var app = firebase.app(Pointer_stringify(appNamePtr));
-
-        var unsubscribe = firebase.auth(app).onAuthStateChanged(function (user)
+        try
         {
-            var wrapper = AuthWebGL.AddUser(user);
-            AuthWebGL.SendAuthEventCallback(app.name, wrapper, null, callback);
-        },
-            function (error)
+            var unsubscribe = firebase.auth(app).onAuthStateChanged(function (user)
             {
-                AuthWebGL.SendAuthEventCallback(app.name, null, error, callback);
-            });
-        AuthWebGL.authChangeListeners[listenerID] = unsubscribe;
+                console.log("user changed: " + user);
+                var wrapper = null;
+                if (user)
+                {
+                    wrapper = AuthWebGL.AddUser(user);
+                }
+                AuthWebGL.SendAuthEventCallback(app.name, wrapper, null, callback);
+            },
+                function (error)
+                {
+                    console.log("error listening to user change: " + error);
+                    AuthWebGL.SendAuthEventCallback(app.name, null, error, callback);
+                },
+                function ()
+                {
+                    console.log("listening to user change completed");
+                });
+            AuthWebGL.AddAuthChangeListener(app.name, unsubscribe);
+        }
+        catch (e)
+        {
+            console.log("Error subscribing to auth change: " + e.message);
+        }
     },
-    UnsubscribeToAuthChange_WebGL: function (listenerID)
+    UnsubscribeToAuthChange_WebGL: function (appNamePtr)
     {
-        AuthWebGL.UnSubscribeAuthListener(listenerID);
+        AuthWebGL.RemoveAuthChangeListener(Pointer_stringify(appNamePtr));
     },
-    SubscribeToIdTokenChange_WebGL: function (appNamePtr, listenerID, callback)
+    SubscribeToIdTokenChange_WebGL: function (appNamePtr, callback)
     {
         var app = firebase.app(Pointer_stringify(appNamePtr));
-        var unsubscribe = firebase.auth(app).onIdTokenChanged(function (user)
+        try
         {
-            var wrapper = AuthWebGL.AddUser(user);
-            AuthWebGL.SendAuthEventCallback(app.name, wrapper, null, callback);
-        }, function (error)
+            var unsubscribe = firebase.auth(app).onIdTokenChanged(function (user)
+            {
+                var wrapper = null;
+                if (user)
+                {
+                    wrapper = AuthWebGL.AddUser(user);
+                }
+                AuthWebGL.SendAuthEventCallback(app.name, wrapper, null, callback);
+            },
+                function (error)
+                {
+                    AuthWebGL.SendAuthEventCallback(app.name, null, error, callback);
+                });
+            AuthWebGL.AddIdTokenChangeListener(app.name, unsubscribe);
+        }
+        catch (e)
         {
-            AuthWebGL.SendAuthEventCallback(app.name, null, error, callback);
-        });
-        AuthWebGL.authChangeListeners[listenerID] = unsubscribe;
+            console.log("Error subscribing to id token change: " + e.message);
+        }
     },
-    UnSubscribeToIdTokenChange_WebGL: function (listenerID)
+    UnSubscribeToIdTokenChange_WebGL: function (appNamePtr)
     {
-        AuthWebGL.UnSubscribeAuthListener(listenerID);
+        AuthWebGL.RemoveIdTokenChangeListener(Pointer_stringify(appNamePtr));
     },
     GetLanguageCode_WebGL: function (appNamePtr)
     {

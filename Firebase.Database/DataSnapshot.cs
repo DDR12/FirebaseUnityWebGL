@@ -111,6 +111,7 @@ namespace Firebase.Database
                 return result;
             }
         }
+        [JsonConstructor]
         private DataSnapshot()
         {
 

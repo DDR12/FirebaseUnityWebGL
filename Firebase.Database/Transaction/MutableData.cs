@@ -107,6 +107,7 @@ namespace Firebase.Database
             Key = key;
             RawJsonValue = json;
         }
+        [JsonConstructor]
         public MutableData() { }
         /// <summary>
         /// Used to obtain a <see cref="MutableData"/> instance that encapsulates the data and priority at the given relative path.

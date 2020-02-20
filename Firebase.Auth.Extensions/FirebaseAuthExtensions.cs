@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Firebase.WebGL.Threading;
+using System.Collections.Generic;
 
 namespace Firebase.Auth
 {
@@ -144,7 +144,7 @@ namespace Firebase.Auth
                 else if (nativeTask.IsCanceled)
                     task.SetCanceled();
                 else
-                    task.SetException(nativeTask.Exception.InnerExceptions);
+                    task.SetException(nativeTask.Exception);
             });
 #endif
             return task.Task;

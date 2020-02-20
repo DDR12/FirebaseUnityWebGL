@@ -1,6 +1,6 @@
 ﻿using Firebase;
-using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace TestProject
 {
@@ -8,6 +8,9 @@ namespace TestProject
     {
         static void Main(string[] args)
         {
+            var source = new TaskCompletionSource<bool>();
+
+            Task t = new TaskCompletionSource<bool>().Task;
             GenerateAppOptionsFile();
             Console.ReadLine();
         }

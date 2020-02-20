@@ -1,8 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using Firebase.WebGL.Threading;
 
 namespace Firebase.Auth
 {
@@ -123,7 +123,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     task.SetCanceled();
                 else
-                    task.SetException(result.Exception.InnerExceptions);
+                    task.SetException(result.Exception);
             });
             return task.Task;
         }
@@ -246,7 +246,7 @@ namespace Firebase.Auth
                 else if (result.IsCanceled)
                     task.SetCanceled();
                 else
-                    task.SetException(result.Exception.InnerExceptions);
+                    task.SetException(result.Exception);
             });
             AuthPInvoke.UpdatePhoneNumber_WebGL(task.Task.Id, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
             return task.Task;

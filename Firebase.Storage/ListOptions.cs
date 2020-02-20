@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Storage
+﻿namespace Firebase.Storage
 {
     /// <summary>
     /// The options `List()` accepts.

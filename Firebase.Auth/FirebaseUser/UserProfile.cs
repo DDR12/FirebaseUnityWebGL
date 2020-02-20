@@ -13,19 +13,11 @@ namespace Firebase.Auth
         /// </summary>
         [JsonProperty("displayName", NullValueHandling = NullValueHandling.Ignore)]
         public string DisplayName { get; set; }
-
-        [JsonProperty("photoURL", NullValueHandling = NullValueHandling.Ignore)]
-        internal string PhotoLink { get; set; }
-
         /// <summary>
         /// User photo URI.
         /// The photo url associated with the user, if any.
         /// </summary>
-        [JsonIgnore]
-        public System.Uri PhotoUrl
-        {
-            get => FirebaseApp.UrlStringToUri(PhotoLink);
-            set => PhotoLink = FirebaseApp.UriToUrlString(value);
-        }
+        [JsonProperty("photoURL", NullValueHandling = NullValueHandling.Ignore)]
+        public System.Uri PhotoUrl { get; set; }
     }
 }

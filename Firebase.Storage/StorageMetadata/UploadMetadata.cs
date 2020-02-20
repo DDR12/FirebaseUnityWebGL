@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-namespace Firebase.Storage
+﻿namespace Firebase.Storage
 {
     /// <summary>
     /// Object metadata that can be set at upload.

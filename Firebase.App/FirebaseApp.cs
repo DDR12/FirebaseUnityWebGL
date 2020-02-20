@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
+using Firebase.WebGL.Threading;
 namespace Firebase
 {
     /// <summary>
@@ -29,7 +28,7 @@ namespace Firebase
         /// <summary>
         /// Gets the default name for <see cref="FirebaseApp"/> objects.
         /// </summary>
-        public static string DefaultName => AppPInvoke.GetDefaultAppName_WebGL();
+        public static string DefaultName => "[DEFAULT]";
 
         static LogLevel m_LogLevel = LogLevel.Debug;
         /// <summary>
@@ -162,7 +161,8 @@ namespace Firebase
         /// <returns>New <see cref="FirebaseApp"/> instance.</returns>
         public static FirebaseApp Create(AppOptions options, string name)
         {
-            bool created = AppPInvoke.InitializeFirebaseApp_WebGL(name, JsonConvert.SerializeObject(options));
+            string optionsJson = JsonConvert.SerializeObject(options);
+            bool created = AppPInvoke.InitializeFirebaseApp_WebGL(name, optionsJson);
             if (created)
             {
                 return new FirebaseApp(name, options);

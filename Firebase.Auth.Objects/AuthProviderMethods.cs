@@ -1,4 +1,5 @@
-﻿namespace Firebase.Auth
+﻿
+namespace Firebase.Auth
 {
     /// <summary>
     /// Popular constant values for Sign in methods for various providers.

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Firebase.Functions
+﻿namespace Firebase.Functions
 {
     /// <summary>
     /// Optional options used while creating a <see cref="HttpsCallableReference"/> to a cloud function.

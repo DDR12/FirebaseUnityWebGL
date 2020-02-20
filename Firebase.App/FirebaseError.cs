@@ -7,6 +7,8 @@ namespace Firebase
         [JsonProperty("error")]
         public FirebaseError Error { get; set; }
 
+        [JsonConstructor]
+
         public WrapperError() { }
         public static FirebaseError FromJson(string json) => JsonConvert.DeserializeObject<WrapperError>(json).Error;
     }
@@ -29,6 +31,7 @@ namespace Firebase
         /// <summary>
         /// 
         /// </summary>
+        [JsonConstructor]
         public FirebaseError() { }
 
         /// <summary>

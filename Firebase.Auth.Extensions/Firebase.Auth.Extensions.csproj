@@ -45,7 +45,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\AOT\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,6 +53,13 @@
   <ItemGroup>
     <Compile Include="FirebaseAuthExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebGLTasks\WebGLTasks.csproj">
+      <Project>{3103C488-7080-44CA-B5DC-4F900D18A0EF}</Project>
+      <Name>WebGLTasks</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

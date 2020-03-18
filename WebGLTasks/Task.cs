@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     public abstract class Task
     {

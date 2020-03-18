@@ -295,8 +295,8 @@ namespace Firebase.Database
         public Task<DataSnapshot> GetValueAsync()
         {
             var task = WebGLTaskManager.GetTask<DataSnapshot>();
-            DatabasePInvoke.GetQueryValue_WebGL(RefID, task.Task.Id, GetQueriesListJson(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.GetQueryValue_WebGL(RefID, task.Promise.Id, GetQueriesListJson(), WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
         
         /// <summary>

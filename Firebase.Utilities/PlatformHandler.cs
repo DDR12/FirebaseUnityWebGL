@@ -21,7 +21,7 @@ public static class PlatformHandler
     /// <summary>
     /// Notifies users that a feature in the webgl wrapper is just a stub to match the official editor library methods and thus using/calling said feature has no effect.
     /// </summary>
-    public static void NotifyWebGLFeatureDoesntHaveAMatch([CallerMemberName] string memberName = null)
+    public static void NotifyWebGLFeatureDoesntHaveAMatch(string memberName)
     {
         Debug.Log($"Using: {memberName} has no effect in WebGL, this implementation is just a stub to match official library.");
     }
@@ -29,7 +29,7 @@ public static class PlatformHandler
     /// Notifies that a feature is automatically handled in webgl and has no actual callable implentation in the javascript library.
     /// </summary>
     /// <param name="memberName"></param>
-    public static void NotifyFeatureIsUselessInWebGL([CallerMemberName] string memberName = null)
+    public static void NotifyFeatureIsUselessInWebGL(string memberName)
     {
         Debug.Log($"Using: {memberName} in webgl is useless the functionality is handled automatically, if your app/game is webgl only, this is only usefull only in editor.");
     }
@@ -38,7 +38,7 @@ public static class PlatformHandler
     /// </summary>
     /// <param name="memberName">The member that the user tried to call outside WebGL build.</param>
     /// <returns></returns>
-    public static System.Exception GetWebGLOnlyFeatureException([CallerMemberName] string memberName = null)
+    public static System.Exception GetWebGLOnlyFeatureException(string memberName)
     {
         return new System.Exception($"{memberName} is WebGL only feature, that means it is only functional when running the app/game in the browser.");
     }

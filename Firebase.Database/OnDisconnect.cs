@@ -33,8 +33,8 @@ namespace Firebase.Database
         public Task Cancel()
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.CancelOnDisconnectForReference_WebGL(m_Reference.RefID, task.Task.Id, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.CancelOnDisconnectForReference_WebGL(m_Reference.RefID, task.Promise.Id, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace Firebase.Database
         public Task RemoveValue()
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.RemoveValueOnDisconnectForReference_WebGL(m_Reference.RefID, task.Task.Id, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.RemoveValueOnDisconnectForReference_WebGL(m_Reference.RefID, task.Promise.Id, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace Firebase.Database
         public Task SetValue(object value)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.SetValueOnDisconnectForReference_WebGL(m_Reference.RefID, task.Task.Id, JsonConvert.SerializeObject(value), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.SetValueOnDisconnectForReference_WebGL(m_Reference.RefID, task.Promise.Id, JsonConvert.SerializeObject(value), WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
         /// <summary>
         /// Ensure the data at this location is set to the specified value and priority when the client is disconnected (due to closing the browser, navigating to a new page, or network issues).
@@ -70,8 +70,8 @@ namespace Firebase.Database
         public Task SetValue(object value, string priority)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.SetValueOnDisconnectWithProirity_WebGL(m_Reference.RefID, task.Task.Id, JsonConvert.SerializeObject(value), priority, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.SetValueOnDisconnectWithProirity_WebGL(m_Reference.RefID, task.Promise.Id, JsonConvert.SerializeObject(value), priority, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace Firebase.Database
         public Task UpdateChildren(IDictionary<string, object> update)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.UpdateChildrenOnDisconnectForReference_WebGL(m_Reference.RefID, task.Task.Id, JsonConvert.SerializeObject(update), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.UpdateChildrenOnDisconnectForReference_WebGL(m_Reference.RefID, task.Promise.Id, JsonConvert.SerializeObject(update), WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
     }
 }

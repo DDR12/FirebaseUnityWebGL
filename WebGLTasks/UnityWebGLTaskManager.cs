@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     internal class UnityWebGLTaskManager : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿namespace Firebase.WebGL.Threading
+﻿namespace System.Threading.Tasks
 {
     public enum TaskCreationOptions
     {

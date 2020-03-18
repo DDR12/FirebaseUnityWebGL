@@ -1,5 +1,6 @@
-﻿using Firebase.WebGL.Threading;
+﻿using Firebase.Extensions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Firebase.Auth
 {
@@ -181,8 +182,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SetPersistenceAsync(persistenceType);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SetPersistenceAsync_WebGL));
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -216,8 +217,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.VerifyPasswordResetCodeAsync(code);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException<string>(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(VerifyPasswordResetCodeAsync_WebGL));
+            return WebGLTaskExtension.FromException<string>(exception);
 #endif
         }
 
@@ -235,8 +236,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.UpdateCurrentUserAsync(user);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(UpdateCurrentUserAsync_WebGL));
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -273,8 +274,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SignInWithPhoneNumberAsync(phoneNumber, recaptchaParameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException<SignInResult>(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SignInWithPhoneNumberAsync_WebGL));
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -295,9 +296,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SendSignInLinkToEmailAsync(email, actionCodeSettings);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SendSignInLinkToEmailAsync_WebGL));
 
-            return Task.FromException(exception);
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -316,9 +317,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SignInWithEmailLinkAsync(email, emailLink);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SignInWithEmailLinkAsync_WebGL));
 
-            return Task.FromException<SignInResult>(exception);
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -334,9 +335,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.ApplyActionCodeAsync(code);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(ApplyActionCodeAsync_WebGL));
 
-            return Task.FromException(exception);
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -352,9 +353,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.CheckActionCodeAsync(code);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(CheckActionCodeAsync_WebGL));
 
-            return Task.FromException<ActionCodeInfo>(exception);
+            return WebGLTaskExtension.FromException<ActionCodeInfo>(exception);
 #endif
         }
 
@@ -371,9 +372,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.ConfirmPassowrdResetAsync(code, newPassword);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(ConfirmPassowrdResetAsync_WebGL));
 
-            return Task.FromException(exception);
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -392,9 +393,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SignInWithRedirectAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SignInWithRedirectAsync_WebGL));
 
-            return Task.FromException(exception);
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
         /// <summary>
@@ -411,9 +412,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.GetRedirectResultAsync();
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(GetRedirectResultAsync_WebGL));
 
-            return Task.FromException<SignInResult>(exception);
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -434,9 +435,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return firebaseAuth.SignInWithPopupAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(SignInWithPopupAsync_WebGL));
 
-            return Task.FromException<SignInResult>(exception);
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -457,9 +458,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.ReauthenticateWithRedirectAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-
-            return Task.FromException(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(ReauthenticateWithRedirectAsync_WebGL));
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -478,9 +478,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.ReauthenticateWithPopupAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(ReauthenticateWithPopupAsync_WebGL));
 
-            return Task.FromException<SignInResult>(exception);
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -498,9 +498,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.ReauthenticateWithPhoneNumberAsync(phoneNumber, recaptchaParameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(ReauthenticateWithPhoneNumberAsync_WebGL));
 
-            return Task.FromException<SignInResult>(exception);
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -518,9 +518,9 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.LinkWithRedirectAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(LinkWithRedirectAsync_WebGL));
 
-            return Task.FromException(exception);
+            return WebGLTaskExtension.FromException(exception);
 #endif
         }
 
@@ -539,8 +539,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.LinkWithPopupAsync(providerID, scopes, parameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException<SignInResult>(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(LinkWithPopupAsync_WebGL));
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 
@@ -557,8 +557,8 @@ namespace Firebase.Auth
 #if !UNITY_EDITOR && UNITY_WEBGL
             return user.LinkWithPhoneNumberAsync(phoneNumber, recaptchaParameters);
 #else
-            var exception = PlatformHandler.GetWebGLOnlyFeatureException();
-            return Task.FromException<SignInResult>(exception);
+            var exception = PlatformHandler.GetWebGLOnlyFeatureException(nameof(LinkWithPhoneNumberAsync_WebGL));
+            return WebGLTaskExtension.FromException<SignInResult>(exception);
 #endif
         }
 

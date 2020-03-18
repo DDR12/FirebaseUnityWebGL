@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Firebase.WebGL.Threading;
+using System.Threading.Tasks;
+
 namespace Firebase
 {
     /// <summary>
@@ -38,12 +39,12 @@ namespace Firebase
         {
             get
             {
-                PlatformHandler.NotifyWebGLFeatureDoesntHaveAMatch();
+                PlatformHandler.NotifyWebGLFeatureDoesntHaveAMatch(nameof(LogLevel));
                 return m_LogLevel;
             }
             set
             {
-                PlatformHandler.NotifyWebGLFeatureDoesntHaveAMatch();
+                PlatformHandler.NotifyWebGLFeatureDoesntHaveAMatch(nameof(LogLevel));
                 m_LogLevel = value;
             }
         }
@@ -101,7 +102,7 @@ namespace Firebase
         public static Uri UrlStringToUri(string urlString)
         {
             Uri uri;
-            if (string.IsNullOrWhiteSpace(urlString))
+            if (string.IsNullOrEmpty(urlString))
             {
                 return null;
             }

@@ -1,6 +1,7 @@
-﻿using Firebase.WebGL.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Firebase
 {
     /// <summary>
@@ -9,7 +10,7 @@ namespace Firebase
     public static class WebGLTaskManager
     {
         static Dictionary<int, IWebGLTask> tasks;
-
+        static int currentID = 0;
         static WebGLTaskManager()
         {
             tasks = new Dictionary<int, IWebGLTask>();
@@ -19,23 +20,23 @@ namespace Firebase
         /// </summary>
         /// <typeparam name="TResult">Type of the return type for the task.</typeparam>
         /// <returns>The created task.</returns>
-        public static TaskCompletionSource<TResult> GetTask<TResult>()
+        public static WebGLTaskHandler<TResult> GetTask<TResult>()
         {
             TaskCompletionSource<TResult> taskCompletionSource = new TaskCompletionSource<TResult>();
-            WebGLTaskHandler<TResult> promiseHandler = new WebGLTaskHandler<TResult>(taskCompletionSource);
-            tasks.Add(taskCompletionSource.Task.Id, promiseHandler);
-            return taskCompletionSource;
+            WebGLTaskHandler<TResult> promiseHandler = new WebGLTaskHandler<TResult>(taskCompletionSource, currentID++);
+            tasks.Add(promiseHandler.ID, promiseHandler);
+            return promiseHandler;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static TaskCompletionSource<object> GetTask()
+        public static WebGLTaskHandler GetTask()
         {
             TaskCompletionSource<object> taskCompletionSource = new TaskCompletionSource<object>();
-            WebGLTaskHandler promiseHandler = new WebGLTaskHandler(taskCompletionSource);
-            tasks.Add(taskCompletionSource.Task.Id, promiseHandler);
-            return taskCompletionSource;
+            WebGLTaskHandler promiseHandler = new WebGLTaskHandler(taskCompletionSource, currentID++);
+            tasks.Add(promiseHandler.ID, promiseHandler);
+            return promiseHandler;
         }
         /// <summary>
         /// 

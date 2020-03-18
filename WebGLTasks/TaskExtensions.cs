@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     public static class TaskExtensions
     {

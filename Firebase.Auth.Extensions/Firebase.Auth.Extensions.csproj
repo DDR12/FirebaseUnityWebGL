@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Firebase.Auth.Extensions</RootNamespace>
     <AssemblyName>Firebase.Auth.Extensions</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,26 +41,34 @@
       <HintPath>..\..\LibrariesBuilds\Firebase.Auth.Objects\Firebase.Auth.Objects.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Firebase.Task.Extension">
+      <HintPath>..\..\LibrariesBuilds\Firebase.Task.Extension\Firebase.Task.Extension.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Firebase.Utilities">
       <HintPath>..\..\LibrariesBuilds\Firebase.Utilities\Firebase.Utilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\FirebaseUnityWebGLHelpers\HelperLibraries\JsonDotNet\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Unity.Compat">
+      <HintPath>..\..\Firebase\Assets\Parse\Plugins\Unity.Compat.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Tasks">
+      <HintPath>..\..\Firebase\Assets\Parse\Plugins\Unity.Tasks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FirebaseAuthExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebGLTasks\WebGLTasks.csproj">
-      <Project>{3103C488-7080-44CA-B5DC-4F900D18A0EF}</Project>
-      <Name>WebGLTasks</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     public sealed class Task<T> : Task
     {

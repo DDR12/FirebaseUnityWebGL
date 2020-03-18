@@ -31,7 +31,7 @@ namespace Firebase.Auth.UI
             {
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-                    return AuthUIPInvoke.GetAuthUIIsPendingRedirect_WebGL(ID);
+                return AuthUIPInvoke.GetAuthUIIsPendingRedirect_WebGL(ID);
 #else
                 return false;
 #endif
@@ -89,12 +89,12 @@ namespace Firebase.Auth.UI
         /// <returns>A task that resolves with the logged in user or an error otherwise.</returns>
         public Task<SignInResult> Start(Config config)
         {
-            TaskCompletionSource<SignInResult> task = WebGLTaskManager.GetTask<SignInResult>();
+            var task = WebGLTaskManager.GetTask<SignInResult>();
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-            AuthUIPInvoke.StartAuthUI_WebGL(ID, task.Task.Id, config.ToJson(), WebGLTaskManager.DequeueTask);
+            AuthUIPInvoke.StartAuthUI_WebGL(ID, task.ID, config.ToJson(), WebGLTaskManager.DequeueTask);
 #endif
-            return task.Task;
+            return task.Promise.Task;
         }
         
 
@@ -124,12 +124,12 @@ namespace Firebase.Auth.UI
         /// <returns>A task that resolves with the id of the deleted ui, or rejects if an error occurs.</returns>
         public Task DeleteAsync()
         {
-            TaskCompletionSource<object> task = WebGLTaskManager.GetTask();
+            var task = WebGLTaskManager.GetTask();
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-            AuthUIPInvoke.DeleteAuthUI_WebGL(task.Task.Id, ID, WebGLTaskManager.DequeueTask);
+            AuthUIPInvoke.DeleteAuthUI_WebGL(task.ID, ID, WebGLTaskManager.DequeueTask);
 #endif
-            return task.Task;
+            return task.Promise.Task;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@
         /// <returns></returns>
         public static Credential GetCredential(string idToken = null, string accessToken = null)
         {
-            if (string.IsNullOrWhiteSpace(idToken) && string.IsNullOrWhiteSpace(accessToken))
+            if (string.IsNullOrEmpty(idToken) && string.IsNullOrEmpty(accessToken))
                 throw new System.ArgumentNullException($"{nameof(idToken)}, {nameof(accessToken)}", "are both null, at least id token or access token must be provided.");
 
             return Credential.FromJson(AuthPInvoke.GetGoogleCredential_WebGL(idToken, accessToken));

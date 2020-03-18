@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     public class ThreadLocal<T> : IDisposable
     {

@@ -1,6 +1,6 @@
 ﻿
 using System;
-namespace Firebase.WebGL.Threading
+namespace Firebase
 {
     /// <summary>
     /// Interface for a Pending Task, running on the javascript side, aka a 'Promise'.

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using Firebase.WebGL.Threading;
+using System.Threading.Tasks;
 
 namespace Firebase.Auth
 {
@@ -89,8 +89,8 @@ namespace Firebase.Auth
         public Task DeleteAsync()
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.DeleteUser_WebGL(task.Task.Id, NativeLibID, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.DeleteUser_WebGL(task.ID, NativeLibID, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -102,9 +102,8 @@ namespace Firebase.Auth
         {
             Credential.CheckIsEmpty(credential);
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.LinkWithCredential_WebGL(task.Task.Id,
-                NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.LinkWithCredential_WebGL(task.ID, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -138,8 +137,8 @@ namespace Firebase.Auth
         {
             Credential.CheckIsEmpty(credential);
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.ReauthenticateWithCredential_WebGL(task.Task.Id, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ReauthenticateWithCredential_WebGL(task.ID, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Convenience function for <see cref="ReauthenticateAndRetrieveDataAsync"/> that discards the returned <see cref="AdditionalUserInfo"/> data.
@@ -158,8 +157,8 @@ namespace Firebase.Auth
         public Task ReloadAsync()
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.ReloadUser_WebGL(task.Task.Id, NativeLibID, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ReloadUser_WebGL(task.ID, NativeLibID, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -181,8 +180,8 @@ namespace Firebase.Auth
         public Task<string> TokenAsync(bool forceRefresh = false)
         {
             var task = WebGLTaskManager.GetTask<string>();
-            AuthPInvoke.GetIdToken_WebGL(task.Task.Id, NativeLibID, forceRefresh, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.GetIdToken_WebGL(task.ID, NativeLibID, forceRefresh, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -194,8 +193,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(provider, nameof(provider));
             var task = WebGLTaskManager.GetTask<FirebaseUser>();
-            AuthPInvoke.UnlinkUser_WebGL(task.Task.Id, NativeLibID, provider, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UnlinkUser_WebGL(task.ID, NativeLibID, provider, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -210,8 +209,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(newEmail, nameof(newEmail));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.UpdateEmail_WebGL(task.Task.Id, NativeLibID, newEmail, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UpdateEmail_WebGL(task.ID, NativeLibID, newEmail, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Updates the user's password.
@@ -224,8 +223,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(newPassword, nameof(newPassword));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.UpdatePassword_WebGL(task.Task.Id, NativeLibID, newPassword, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UpdatePassword_WebGL(task.ID, NativeLibID, newPassword, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -236,20 +235,20 @@ namespace Firebase.Auth
         /// <returns></returns>
         public Task<FirebaseUser> UpdatePhoneNumberCredentialAsync(Credential credential)
         {
-            TaskCompletionSource<FirebaseUser> task = new TaskCompletionSource<FirebaseUser>();
+            var task = WebGLTaskManager.GetTask<FirebaseUser>();
             Credential.CheckIsEmpty(credential);
             var nativeTask = WebGLTaskManager.GetTask();
-            nativeTask.Task.ContinueWith(result =>
+            nativeTask.Promise.Task.ContinueWith(result =>
             {
                 if (result.IsSuccess())
-                    task.SetResult(this);
+                    task.Promise.SetResult(this);
                 else if (result.IsCanceled)
-                    task.SetCanceled();
+                    task.Promise.SetCanceled();
                 else
-                    task.SetException(result.Exception);
+                    task.Promise.SetException(result.Exception);
             });
-            AuthPInvoke.UpdatePhoneNumber_WebGL(task.Task.Id, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UpdatePhoneNumber_WebGL(task.ID, NativeLibID, credential.FullJson, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -260,8 +259,8 @@ namespace Firebase.Auth
         public Task UpdateUserProfileAsync(UserProfile profile)
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.UpdateProfile_WebGL(task.Task.Id, NativeLibID, JsonConvert.SerializeObject(profile), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UpdateProfile_WebGL(task.ID, NativeLibID, JsonConvert.SerializeObject(profile), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         #endregion
 
@@ -275,8 +274,8 @@ namespace Firebase.Auth
         public Task<IdTokenResult> GetIdTokenResultAsync(bool forceRefresh = false)
         {
             var task = WebGLTaskManager.GetTask<IdTokenResult>();
-            AuthPInvoke.GetIdTokenResult_WebGL(task.Task.Id, NativeLibID, forceRefresh, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.GetIdTokenResult_WebGL(task.ID, NativeLibID, forceRefresh, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Sends a verification email to a user.
@@ -296,9 +295,9 @@ namespace Firebase.Auth
         public Task SendEmailVerificationAsync(ActionCodeSettings actionCodeSettings)
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SendEmailVerification_WebGL(task.Task.Id, NativeLibID, ActionCodeSettings.ToJson(actionCodeSettings),
+            AuthPInvoke.SendEmailVerification_WebGL(task.ID, NativeLibID, ActionCodeSettings.ToJson(actionCodeSettings),
                 WebGLTaskManager.DequeueTask);
-            return task.Task;
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -314,9 +313,9 @@ namespace Firebase.Auth
             var task = WebGLTaskManager.GetTask();
             PlatformHandler.CaptureWebGLInput(false);
             AuthProvider provider = new AuthProvider(providerID, scopes, parameters);
-            AuthPInvoke.ReauthenticateWithRedirect_WebGL(task.Task.Id, NativeLibID, provider.ToJson(),
+            AuthPInvoke.ReauthenticateWithRedirect_WebGL(task.ID, NativeLibID, provider.ToJson(),
             WebGLTaskManager.DequeueTask);
-            return task.Task;
+            return task.Promise.Task;
         }
         /// <summary>
         /// Reauthenticates the current user with the specified provider using a pop-up based OAuth flow.
@@ -332,8 +331,8 @@ namespace Firebase.Auth
             var task = WebGLTaskManager.GetTask<SignInResult>();
             PlatformHandler.CaptureWebGLInput(false);
             AuthProvider provider = new AuthProvider(providerID, scopes, parameters);
-            AuthPInvoke.ReauthenticateWithPopup_WebGL(task.Task.Id, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ReauthenticateWithPopup_WebGL(task.ID, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Re-authenticates a user using a fresh credential. 
@@ -346,8 +345,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.ReauthenticateWithPhoneNumber_WebGL(task.Task.Id, NativeLibID, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ReauthenticateWithPhoneNumber_WebGL(task.ID, NativeLibID, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
 
@@ -364,8 +363,8 @@ namespace Firebase.Auth
             var task = WebGLTaskManager.GetTask();
             PlatformHandler.CaptureWebGLInput(false);
             AuthProvider provider = new AuthProvider(providerID, scopes, parameters);
-            AuthPInvoke.LinkUserWithRedirect_WebGL(task.Task.Id, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.LinkUserWithRedirect_WebGL(task.ID, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -382,8 +381,8 @@ namespace Firebase.Auth
             var task = WebGLTaskManager.GetTask<SignInResult>();
             PlatformHandler.CaptureWebGLInput(false);
             AuthProvider provider = new AuthProvider(providerID, scopes, parameters);
-            AuthPInvoke.LinkWithPopup_WebGL(task.Task.Id, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.LinkWithPopup_WebGL(task.ID, NativeLibID, provider.ToJson(), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Links the user account with the given phone number.
@@ -396,14 +395,14 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             var task = WebGLTaskManager.GetTask<SignInResult>();
             PlatformHandler.CaptureWebGLInput(false);
-            AuthPInvoke.LinkWithPhoneNumber_WebGL(task.Task.Id, NativeLibID, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.LinkWithPhoneNumber_WebGL(task.ID, NativeLibID, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         #endregion
 
         internal static FirebaseUser FromJson(string json)
         {
-            if (string.IsNullOrWhiteSpace(json))
+            if (string.IsNullOrEmpty(json))
                 return null;
             return JsonConvert.DeserializeObject<FirebaseUser>(json);
         }

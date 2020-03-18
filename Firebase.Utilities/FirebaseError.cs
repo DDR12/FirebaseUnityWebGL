@@ -53,7 +53,7 @@ namespace Firebase
         /// <returns></returns>
         public static FirebaseError FromJson(string json)
         {
-            if (string.IsNullOrWhiteSpace(json))
+            if (string.IsNullOrEmpty(json))
                 return null;
             try
             {

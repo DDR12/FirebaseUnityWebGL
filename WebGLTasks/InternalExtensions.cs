@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.ExceptionServices;
-using System.Threading.Tasks;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading.Tasks
 {
     internal static class InternalExtensions
     {

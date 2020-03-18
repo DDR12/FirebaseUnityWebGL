@@ -113,8 +113,8 @@ namespace Firebase.Database
         public Task RemoveValueAsync()
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.DatabaseReferenceRemoveValue_WebGL(RefID, task.Task.Id, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.DatabaseReferenceRemoveValue_WebGL(RefID, task.Promise.Id, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -140,8 +140,8 @@ namespace Firebase.Database
         {
             TransactionHandler transactionHandler = new TransactionHandler(TransactionHandlersIDs++, this, transaction);
             var task = WebGLTaskManager.GetTask<DataSnapshot>();
-            DatabasePInvoke.RunTransaction_WebGL(RefID, task.Task.Id, transactionHandler.ID, fireLocalEvents, OnTransactionUpdateCallback, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.RunTransaction_WebGL(RefID, task.Promise.Id, transactionHandler.ID, fireLocalEvents, OnTransactionUpdateCallback, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -154,8 +154,8 @@ namespace Firebase.Database
         public Task SetPriorityAsync(string priority)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.SetDatabaseReferencePriority_WebGL(RefID, task.Task.Id, priority, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.SetDatabaseReferencePriority_WebGL(RefID, task.Promise.Id, priority, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
         /// <summary>
         /// Set a priority for the data at this <see cref="FirebaseDatabase"/> location.
@@ -177,8 +177,8 @@ namespace Firebase.Database
         public Task SetRawJsonValueAsync(string jsonValue)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.SetDatabaseReferenceValue_WebGL(RefID, task.Task.Id, jsonValue, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.SetDatabaseReferenceValue_WebGL(RefID, task.Promise.Id, jsonValue, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
         /// <summary>
         /// Set the data and priority to the given values.
@@ -189,8 +189,8 @@ namespace Firebase.Database
         public Task SetRawJsonValueAsync(string jsonValue, object priority)
         {
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.SetDatabaseReferenceValueWithPriority_WebGL(RefID, task.Task.Id, jsonValue, priority.ToString(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.SetDatabaseReferenceValueWithPriority_WebGL(RefID, task.Promise.Id, jsonValue, priority.ToString(), WebGLTaskManager.DequeueTask);
+            return task.Promise;
 
         }
        
@@ -231,8 +231,8 @@ namespace Firebase.Database
         {
             string updateJson = update == null ? null : JsonConvert.SerializeObject(update);
             var task = WebGLTaskManager.GetTask();
-            DatabasePInvoke.UpdateDatabaseReferenceChildren_WebGL(RefID, task.Task.Id, updateJson, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            DatabasePInvoke.UpdateDatabaseReferenceChildren_WebGL(RefID, task.Promise.Id, updateJson, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         internal static DatabaseReference GetReference(uint id)

@@ -1,6 +1,6 @@
-﻿using Firebase.WebGL.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Firebase.Auth
@@ -163,7 +163,7 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(password, nameof(password));
             var finalTask = new TaskCompletionSource<FirebaseUser>();
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            task.Task.ContinueWith(result =>
+            task.Promise.Task.ContinueWith(result =>
             {
                 if (result.IsSuccess())
                     finalTask.SetResult(result.Result.User);
@@ -172,7 +172,7 @@ namespace Firebase.Auth
                 else
                     finalTask.SetException(result.Exception);
             });
-            AuthPInvoke.CreateUserWithEmailAndPassword_WebGL(task.Task.Id, App.Name, email, password, WebGLTaskManager.DequeueTask);
+            AuthPInvoke.CreateUserWithEmailAndPassword_WebGL(task.ID, App.Name, email, password, WebGLTaskManager.DequeueTask);
             return finalTask.Task;
         }
         /// <summary>
@@ -185,8 +185,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(email, nameof(email));
             var task = WebGLTaskManager.GetTask<IEnumerable<string>>();
-            AuthPInvoke.FetchSignInMethodsForEmail_WebGL(task.Task.Id, App.Name, email, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.FetchSignInMethodsForEmail_WebGL(task.ID, App.Name, email, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Sends a password reset email to the given email address.
@@ -205,8 +205,8 @@ namespace Firebase.Auth
         {
             Credential.CheckIsEmpty(credential);
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithCredential_WebGL(task.Task.Id, App.Name, credential.FullJson, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithCredential_WebGL(task.ID, App.Name, credential.FullJson, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Asynchronously signs in with the given credentials.
@@ -315,9 +315,9 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(email, nameof(email));
             PreconditionUtilities.CheckNotNullOrEmpty(password, nameof(password));
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithEmailAndPassword_WebGL(task.Task.Id,
+            AuthPInvoke.SignInWithEmailAndPassword_WebGL(task.ID,
                App.Name, email, password, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -328,8 +328,8 @@ namespace Firebase.Auth
         public Task<SignInResult> SignInAndRetrieveDataAnonymouslyAsync()
         {
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInAnonymously_WebGL(task.Task.Id, App.Name, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInAnonymously_WebGL(task.ID, App.Name, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Asynchronously signs in using a custom token.
@@ -342,8 +342,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(token, nameof(token));
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithCustomToken_WebGL(task.Task.Id, App.Name, token, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithCustomToken_WebGL(task.ID, App.Name, token, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Sets the current language to the default device/browser preference.
@@ -367,8 +367,8 @@ namespace Firebase.Auth
         public Task SetPersistenceAsync(PersistenceType persistence)
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SetAuthPersistence_WebGL(task.Task.Id, App.Name, persistence.ToString().ToLower(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SetAuthPersistence_WebGL(task.ID, App.Name, persistence.ToString().ToLower(), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -381,8 +381,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(email, nameof(email));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SendPasswordResetEmail_WebGL(task.Task.Id, App.Name, email, ActionCodeSettings.ToJson(actionCodeSettings), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SendPasswordResetEmail_WebGL(task.ID, App.Name, email, ActionCodeSettings.ToJson(actionCodeSettings), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Signs out the current user.
@@ -391,8 +391,8 @@ namespace Firebase.Auth
         public Task SignOutAsync()
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SignOut_WebGL(task.Task.Id, App.Name, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignOut_WebGL(task.ID, App.Name, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Checks a password reset code sent to the user by email or other out-of-band mechanism.
@@ -403,8 +403,8 @@ namespace Firebase.Auth
         public Task<string> VerifyPasswordResetCodeAsync(string code)
         {
             var task = WebGLTaskManager.GetTask<string>();
-            AuthPInvoke.VerifyPasswordResetCode_WebGL(task.Task.Id, App.Name, code, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.VerifyPasswordResetCode_WebGL(task.ID, App.Name, code, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Asynchronously sets the provided user as currentUser on the current Auth instance. A new instance copy of the user provided will be made and set as currentUser.
@@ -416,8 +416,8 @@ namespace Firebase.Auth
         public Task UpdateCurrentUserAsync(FirebaseUser user)
         {
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.UpdateCurrentAuthUser_WebGL(task.Task.Id, App.Name, user.NativeLibID, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.UpdateCurrentAuthUser_WebGL(task.ID, App.Name, user.NativeLibID, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -445,8 +445,8 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             PlatformHandler.CaptureWebGLInput(false);
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithPhoneNumber_WebGL(task.Task.Id, App.Name, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithPhoneNumber_WebGL(task.ID, App.Name, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -463,8 +463,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(email, nameof(email));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SendSignInLinkToEmail_WebGL(task.Task.Id, App.Name, email, ActionCodeSettings.ToJson(actionCodeSettings), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SendSignInLinkToEmail_WebGL(task.ID, App.Name, email, ActionCodeSettings.ToJson(actionCodeSettings), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Asynchronously signs in using an email and sign-in email link. If no link is passed, the link is inferred from the current URL.
@@ -479,8 +479,8 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(email, nameof(email));
             // email link can be null, if it is null, the link is infered from the current URL of the browser.
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithEmailLink_WebGL(task.Task.Id, App.Name, email, emailLink, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithEmailLink_WebGL(task.ID, App.Name, email, emailLink, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -492,8 +492,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(code, nameof(code));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.ApplyAuthActionCode_WebGL(task.Task.Id, App.Name, code, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ApplyAuthActionCode_WebGL(task.ID, App.Name, code, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -505,8 +505,8 @@ namespace Firebase.Auth
         {
             PreconditionUtilities.CheckNotNullOrEmpty(code, nameof(code));
             var task = WebGLTaskManager.GetTask<ActionCodeInfo>();
-            AuthPInvoke.CheckAuthActionCode_WebGL(task.Task.Id, App.Name, code, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.CheckAuthActionCode_WebGL(task.ID, App.Name, code, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Completes the password reset process, given a confirmation code and new password.
@@ -519,8 +519,8 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(code, nameof(code));
             PreconditionUtilities.CheckNotNullOrEmpty(newPassword, nameof(newPassword));
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.ConfirmPasswordReset_WebGL(task.Task.Id, App.Name, code, newPassword, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.ConfirmPasswordReset_WebGL(task.ID, App.Name, code, newPassword, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
 
         /// <summary>
@@ -534,8 +534,8 @@ namespace Firebase.Auth
         public Task<SignInResult> GetRedirectResultAsync()
         {
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.GetAuthRedirectResult_WebGL(task.Task.Id, App.Name, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.GetAuthRedirectResult_WebGL(task.ID, App.Name, WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Authenticates a Firebase client using a full-page redirect flow. To handle the results and errors for this operation, refer to <see cref="GetRedirectResultAsync"/>
@@ -549,8 +549,8 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(providerID, nameof(providerID));
             PlatformHandler.CaptureWebGLInput(false);
             var task = WebGLTaskManager.GetTask();
-            AuthPInvoke.SignInWithRedirect_WebGL(task.Task.Id, App.Name,new AuthProvider(providerID,scopes,parameters).ToJson() , WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithRedirect_WebGL(task.ID, App.Name,new AuthProvider(providerID,scopes,parameters).ToJson() , WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         /// <summary>
         /// Authenticates a Firebase client using a popup-based OAuth authentication flow.
@@ -566,8 +566,8 @@ namespace Firebase.Auth
             PreconditionUtilities.CheckNotNullOrEmpty(providerID, nameof(providerID));
             PlatformHandler.CaptureWebGLInput(false);
             var task = WebGLTaskManager.GetTask<SignInResult>();
-            AuthPInvoke.SignInWithPopup_WebGL(task.Task.Id, App.Name, new AuthProvider(providerID, scopes, parameters).ToJson(), WebGLTaskManager.DequeueTask);
-            return task.Task;
+            AuthPInvoke.SignInWithPopup_WebGL(task.ID, App.Name, new AuthProvider(providerID, scopes, parameters).ToJson(), WebGLTaskManager.DequeueTask);
+            return task.Promise.Task;
         }
         #endregion
 

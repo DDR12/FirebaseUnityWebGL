@@ -23,6 +23,7 @@ namespace Firebase
         /// <param name="value">The subscriber to attach.</param>
         /// <returns></returns>
         public static uint? SubscribeToEvent<T>(EventHandler<T>  eventHandler, EventHandler<T> value)
+            where T : EventArgs
         {
             if (value == null)
                 return null;
@@ -50,6 +51,7 @@ namespace Firebase
         /// <param name="value">The subscriber to detach.</param>
         /// <returns></returns>
         public static uint? UnsubscribeFromEvent<T>(EventHandler<T> eventHandler, EventHandler<T> value)
+            where T : EventArgs
         {
             if (value == null)
                 return null;

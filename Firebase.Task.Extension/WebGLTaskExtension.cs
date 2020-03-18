@@ -7,8 +7,32 @@ namespace Firebase.Extensions
     /// <summary>
     /// Extension methods for <see cref="Task"/> and <see cref="Task{TResult}"/> that allow the continuation function to be executed on the main thread in Unity.
     /// </summary>
-    public static class TaskExtension
+    public static class WebGLTaskExtension
     {
+        /// <summary>
+        /// Returns a failed task with the given error
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static Task FromException(Exception exception)
+        {
+            return FromException<bool>(exception);
+        }
+        /// <summary>
+        /// Returns a failed task with the given error
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static Task<TResult> FromException<TResult>(Exception exception)
+        {
+            if(exception == null)
+                throw new ArgumentNullException("exception");
+
+            TaskCompletionSource<TResult> completionSource = new TaskCompletionSource<TResult>();
+            completionSource.TrySetException(exception);
+            return completionSource.Task;
+        }
         /// <summary>
         /// Returns a Task which completes once the given task is complete and the given continuation function is called from the main thread in Unity.
         /// </summary>

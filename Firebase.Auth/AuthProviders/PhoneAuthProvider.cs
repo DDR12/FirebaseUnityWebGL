@@ -1,6 +1,7 @@
-﻿using Firebase.WebGL.Threading;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Firebase.Auth
 {
     /// <summary>
@@ -133,13 +134,12 @@ namespace Firebase.Auth
                 resendingToken = forceResendingToken,
             };
             var task = WebGLTaskManager.GetTask<PhoneVerifyResult>();
-            int id = task.Task.Id;
-            PendingAuthCallbacks.Add(id, phoneAuthCallbacksData);
+            PendingAuthCallbacks.Add(task.ID, phoneAuthCallbacksData);
             var recaptchaJson = RecaptchaParameters.ToJson(RecaptchaParameters.Default);
-            AuthPInvoke.PhoneAuthProviderVerifyPhoneNumber_WebGL(task.Task.Id, phoneNumber, recaptchaJson, WebGLTaskManager.DequeueTask);
-            task.Task.ContinueWith(result =>
+            AuthPInvoke.PhoneAuthProviderVerifyPhoneNumber_WebGL(task.ID, phoneNumber, recaptchaJson, WebGLTaskManager.DequeueTask);
+            task.Promise.Task.ContinueWith(result =>
             {
-                ExecuteCallbacks(result, id);
+                ExecuteCallbacks(result, task.ID);
             });
         }
 
@@ -149,13 +149,13 @@ namespace Firebase.Auth
             {
                 if (result.IsSuccess())
                 {
-                    if (result.Result == null || string.IsNullOrWhiteSpace(result.Result.VerificationID))
+                    if (result.Result == null || string.IsNullOrEmpty(result.Result.VerificationID))
                     {
                         phoneAuthCallbacksData.verificationFailed?.Invoke("Verification failed");
                     }
                     else
                     {
-                        if (!string.IsNullOrWhiteSpace(result.Result.VerificationCode))
+                        if (!string.IsNullOrEmpty(result.Result.VerificationCode))
                             phoneAuthCallbacksData.verificationCompleted?.Invoke(GetCredential(result.Result.VerificationID, result.Result.VerificationCode));
                         else
                             phoneAuthCallbacksData.verificationFailed?.Invoke("Verification code is wrong or missing.");
@@ -189,9 +189,9 @@ namespace Firebase.Auth
         public Task<string> VerifyPhoneNumberAsync(string phoneNumber, RecaptchaParameters recaptchaParameters = null)
         {
             var task = WebGLTaskManager.GetTask<string>();
-            AuthPInvoke.PhoneAuthProviderVerifyPhoneNumber_WebGL(task.Task.Id, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters),
+            AuthPInvoke.PhoneAuthProviderVerifyPhoneNumber_WebGL(task.ID, phoneNumber, RecaptchaParameters.ToJson(recaptchaParameters),
                 WebGLTaskManager.DequeueTask);
-            return task.Task;
+            return task.Promise.Task;
         }
         /// <summary>
         /// Creates a phone auth credential, given the verification ID from <see cref="VerifyPhoneNumberAsync"/> and the code that was sent to the user's mobile device.

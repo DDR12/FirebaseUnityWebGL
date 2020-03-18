@@ -188,8 +188,8 @@ namespace Firebase.Messaging
         public Task<bool> DeleteTokenAsync(string token)
         {
             var task = WebGLTaskManager.GetTask<bool>();
-            MessagingPInvoke.DeleteMessagingToken_WebGL(task.Task.Id, App.Name, token, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            MessagingPInvoke.DeleteMessagingToken_WebGL(task.Promise.Id, App.Name, token, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -199,8 +199,8 @@ namespace Firebase.Messaging
         public Task<string> GetToken()
         {
             var task = WebGLTaskManager.GetTask<string>();
-            MessagingPInvoke.GetMessagingToken_WebGL(task.Task.Id, App.Name, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            MessagingPInvoke.GetMessagingToken_WebGL(task.Promise.Id, App.Name, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Firebase.Messaging
         public static Task RequestPermissionAsync()
         {
             var task = WebGLTaskManager.GetTask<bool>();
-            task.Task.ContinueWith(permissionTask =>
+            task.Promise.ContinueWith(permissionTask =>
             {
                 bool granted = permissionTask.Result;
                 if (!granted)
@@ -234,8 +234,8 @@ namespace Firebase.Messaging
                     }
                 });
             });
-            MessagingPInvoke.RequestNotificationPermission_WebGL(task.Task.Id, WebGLTaskManager.DequeueTask);
-            return task.Task;
+            MessagingPInvoke.RequestNotificationPermission_WebGL(task.Promise.Id, WebGLTaskManager.DequeueTask);
+            return task.Promise;
         }
 
         /// <summary>

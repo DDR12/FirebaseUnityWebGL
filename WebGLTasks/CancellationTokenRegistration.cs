@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Firebase.WebGL.Threading
+namespace System.Threading
 {
     public struct CancellationTokenRegistration : IDisposable
     {

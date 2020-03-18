@@ -1,5 +1,4 @@
-﻿
-using Firebase.WebGL.Threading;
+﻿using System.Threading.Tasks;
 
 namespace Firebase
 {

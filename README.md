@@ -7,7 +7,7 @@ A C# wrapper for the Firebase Javascript sdk for unity's WebGL platform support.
 
 Because the official [Unity Firebase SDK](https://firebase.google.com/docs/unity/setup) only supports Desktop, Android and iOS platforms.
 
-This repository wraps the [Firebase Web SDK](https://firebase.google.com/docs/web/setup) with C# into DLLs usable by unity's runtime WebGL builds, allowing for a full advantage of all the functionality of the sdk while maintaining the same code structure of the unity's sdk so you're still able to build for other platforms without having to delete the WebGL DLLs.
+This is an implementation of the [Firebase Web SDK](https://firebase.google.com/docs/web/setup) with C# and Javascript into DLLs usable by unity's runtime WebGL builds, allowing for a full advantage of all the functionality of the native sdk of other platforms while maintaining the same code structure of the unity's sdk so you're still able to build for other platforms without having to delete the WebGL DLLs.
 
 ## How to use
 Build the DLLs of the services you want to use in your project, (Utilities and Firebase.App) must be buit with any service you import to the unity project.

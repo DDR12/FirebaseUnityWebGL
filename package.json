@@ -4,7 +4,7 @@
   "description": "firebase web gl",
   "main": "index.js",
   "dependencies": {
-    "firebase": "^7.1.0",
+    "firebase": "^7.24.0",
     "firebaseui": "^4.2.0"
   },
   "devDependencies": {},
